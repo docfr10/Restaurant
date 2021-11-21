@@ -148,6 +148,20 @@ class Car(models.Model):
     def __str__(self):
         return self.mark_n_model + ' ' + self.numbers
 
+
+class TransportEvent(models.Model):
+    timestamp_start = models.DateTimeField('Время начала', default=timezone.now)
+    timestamp_end = models.DateTimeField('Время конца', default=timezone.now)
+    description = models.TextField('Описание', max_length=200, blank=False)
+    order = models.ForeignKey('Order', on_delete=models.SET_NULL, verbose_name='Заказ',
+                              related_name='transport_events', null=True)
+
+    class Meta:
+        verbose_name = 'Машина'
+        verbose_name_plural = 'Машины'
+
+    def __str__(self):
+        return str(self.id)
 # class Room(models.Model):
 #     uid = models.CharField('Уникальный идентификатор', max_length=50, default='none')
 #     name = models.CharField('Название', max_length=50)
