@@ -50,14 +50,26 @@ class Pet(models.Model):
 
 class Request(models.Model):
     description = models.TextField('Description', max_length=200, blank=False)
-    # pet = models.OneToOneField('Pet', on_delete=models.SET_NULL, verbose_name='Питомец',
-    #                            related_name='request', null=True)
     pet = models.ForeignKey('Pet', on_delete=models.SET_NULL, verbose_name='Питомец',
                             related_name='requests', null=True)
 
     class Meta:
         verbose_name = 'Заявка'
         verbose_name_plural = 'Заявки'
+
+    def __str__(self):
+        return str(self.id)
+
+
+class Order(models.Model):
+    created_at = models.DateTimeField('Время создания', default=timezone.now)
+    duration = models.IntegerField('Длительность, дни', null=False)
+    request = models.OneToOneField('Request', on_delete=models.SET_NULL, verbose_name='Заявка',
+                                   related_name='order', null=True)
+
+    class Meta:
+        verbose_name = 'Заказ'
+        verbose_name_plural = 'Заказы'
 
     def __str__(self):
         return str(self.id)
