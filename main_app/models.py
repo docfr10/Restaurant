@@ -1,41 +1,44 @@
-# import os
-#
-# from django.contrib.auth.models import AbstractUser
-# from django.core.exceptions import ValidationError
-# from rest_framework.authtoken.admin import User
-# from django.utils import timezone
-# from django.db.models import Q
-# from django.db import models
-#
-# from datetime import timedelta
-# from uuid import uuid4
-#
-# if os.getenv("BACKEND_IMAGE_MAX_SIZE") is not None:
-#     try:
-#         BACKEND_IMAGE_MAX_SIZE = int(os.getenv("BACKEND_IMAGE_MAX_SIZE"))
-#     except:
-#         print("'BACKEND_IMAGE_MAX_SIZE' env variable must be integer, setting up 'BACKEND_IMAGE_MAX_SIZE' as '15'")
-#         BACKEND_IMAGE_MAX_SIZE = 15
-# else:
-#     print("'BACKEND_IMAGE_MAX_SIZE' env variable is not defined, setting up 'BACKEND_IMAGE_MAX_SIZE' as '15'")
-#     BACKEND_IMAGE_MAX_SIZE = 15
-# print('IMAGE_MAX_SIZE: ', BACKEND_IMAGE_MAX_SIZE)
-#
-# if os.getenv("BACKEND_AUDIO_MAX_SIZE") is not None:
-#     try:
-#         BACKEND_AUDIO_MAX_SIZE = int(os.getenv("BACKEND_AUDIO_MAX_SIZE"))
-#     except:
-#         print("'BACKEND_AUDIO_MAX_SIZE' env variable must be integer, setting up 'BACKEND_AUDIO_MAX_SIZE' as '15'")
-#         BACKEND_AUDIO_MAX_SIZE = 15
-# else:
-#     print("'BACKEND_AUDIO_MAX_SIZE' env variable is not defined, setting up 'BACKEND_AUDIO_MAX_SIZE' as '15'")
-#     BACKEND_AUDIO_MAX_SIZE = 15
-# print('AUDIO_MAX_SIZE: ', BACKEND_AUDIO_MAX_SIZE)
-#
-# ICO_INDEX_MIN = 1
-# ICO_INDEX_MAX = 10
-#
-#
+import os
+
+from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
+from rest_framework.authtoken.admin import User
+from django.utils import timezone
+from django.db.models import Q
+from django.db import models
+
+from datetime import timedelta
+from uuid import uuid4
+
+
+class Pet(models.Model):
+    TYPES = (('Cat', 'Cat'),
+             ('Dog', 'Dog'))
+    name = models.CharField('Name', max_length=50, blank=False)
+    type = models.CharField('Type', choices=TYPES, max_length=3, default='Cat')
+    weight = models.FloatField('Weight', null=False)
+    breed = models.CharField('Breed', max_length=50, blank=False)
+    recommendations = models.TextField('Recommendations', max_length=1000, blank=True)
+
+    client = models.ForeignKey('Client', on_delete=models.CASCADE, verbose_name='Client',
+                               related_name='pets', null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'Pet'
+        verbose_name_plural = 'Pets'
+
+
+class Client(models.Model):
+    first_name = models.CharField('First name', max_length=50, blank=False)
+    last_name = models.CharField('Last name', max_length=50, blank=False)
+    middle_name = models.CharField('Middle name', max_length=50, blank=True)
+    phone_number = models.CharField('Phone number', max_length=20, blank=False)
+    email = models.EmailField('Email', blank=True)
+
+    class Meta:
+        verbose_name = 'Client'
+        verbose_name_plural = 'Clients'
+
 # class Room(models.Model):
 #     uid = models.CharField('Уникальный идентификатор', max_length=50, default='none')
 #     name = models.CharField('Название', max_length=50)

@@ -1,11 +1,11 @@
-# from django.contrib.admin import AdminSite
-# from django.contrib import admin
-#
-# from .models import *
-#
-# AdminSite.index_title = 'Администрирование выставки'
-# AdminSite.site_title = 'ArtWay'
-# AdminSite.site_header = 'ArtWay'
+from django.contrib.admin import AdminSite
+from django.contrib import admin
+
+from .models import *
+
+AdminSite.index_title = 'Site administration'
+AdminSite.site_title = 'Overexposure of animals'
+AdminSite.site_header = 'Overexposure of animals'
 #
 #
 # class MediaImageInline(admin.TabularInline):
@@ -170,4 +170,5 @@
 # admin.site.register(Artifact, ArtifactAdmin)
 # admin.site.register(MediaLink, MediaLinkAdmin)
 # admin.site.register(MediaAudio, MediaAudioAdmin)
-# admin.site.register(MediaImage, MediaImageAdmin)
+admin.site.register(Client)
+admin.site.register(Pet)
