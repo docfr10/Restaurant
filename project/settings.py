@@ -119,7 +119,7 @@ if BACKEND_DEFAULT_DB == 'PostgreSQL' or BACKEND_DEFAULT_DB == 'SQLite':
 else:
     print("'BACKEND_DEFAULT_DB' env has wrong value, setting up 'BACKEND_DEFAULT_DB' as 'PostgreSQL'")
     DEFAULT_DATABASE = 'PostgreSQL'
-# @todo перенести на postgres
+
 if DEFAULT_DATABASE == 'SQLite':
     DATABASES = {
         'default': {
