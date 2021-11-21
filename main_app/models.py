@@ -11,22 +11,7 @@ from datetime import timedelta
 from uuid import uuid4
 
 
-class Pet(models.Model):
-    TYPES = (('Cat', 'Cat'),
-             ('Dog', 'Dog'))
-    name = models.CharField('Name', max_length=50, blank=False)
-    type = models.CharField('Type', choices=TYPES, max_length=3, default='Cat')
-    weight = models.FloatField('Weight', null=False)
-    breed = models.CharField('Breed', max_length=50, blank=False)
-    recommendations = models.TextField('Recommendations', max_length=1000, blank=True)
-
-    client = models.ForeignKey('Client', on_delete=models.CASCADE, verbose_name='Client',
-                               related_name='pets', null=True, blank=True)
-
-    class Meta:
-        verbose_name = 'Pet'
-        verbose_name_plural = 'Pets'
-
+# @todo перевести поля моделей
 
 class Client(models.Model):
     first_name = models.CharField('First name', max_length=50, blank=False)
@@ -38,6 +23,44 @@ class Client(models.Model):
     class Meta:
         verbose_name = 'Client'
         verbose_name_plural = 'Clients'
+
+    def __str__(self):
+        return self.last_name + ' ' + self.first_name
+
+
+class Pet(models.Model):
+    TYPES = (('Cat', 'Cat'),
+             ('Dog', 'Dog'))
+    name = models.CharField('Name', max_length=50, blank=False)
+    type = models.CharField('Type', choices=TYPES, max_length=3, default='Cat')
+    weight = models.FloatField('Weight', null=False)
+    breed = models.CharField('Breed', max_length=50, blank=False)
+    recommendations = models.TextField('Recommendations', max_length=1000, blank=True)
+
+    client = models.ForeignKey('Client', on_delete=models.CASCADE, verbose_name='Client',
+                               related_name='pets')
+
+    class Meta:
+        verbose_name = 'Питомец'
+        verbose_name_plural = 'Питомцы'
+
+    def __str__(self):
+        return self.name
+
+
+class Request(models.Model):
+    description = models.TextField('Description', max_length=200, blank=False)
+    # pet = models.OneToOneField('Pet', on_delete=models.SET_NULL, verbose_name='Питомец',
+    #                            related_name='request', null=True)
+    pet = models.ForeignKey('Pet', on_delete=models.SET_NULL, verbose_name='Питомец',
+                            related_name='requests', null=True)
+
+    class Meta:
+        verbose_name = 'Заявка'
+        verbose_name_plural = 'Заявки'
+
+    def __str__(self):
+        return str(self.id)
 
 # class Room(models.Model):
 #     uid = models.CharField('Уникальный идентификатор', max_length=50, default='none')

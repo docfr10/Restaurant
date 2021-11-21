@@ -6,6 +6,8 @@ from .models import *
 AdminSite.index_title = 'Site administration'
 AdminSite.site_title = 'Overexposure of animals'
 AdminSite.site_header = 'Overexposure of animals'
+
+
 #
 #
 # class MediaImageInline(admin.TabularInline):
@@ -170,5 +172,13 @@ AdminSite.site_header = 'Overexposure of animals'
 # admin.site.register(Artifact, ArtifactAdmin)
 # admin.site.register(MediaLink, MediaLinkAdmin)
 # admin.site.register(MediaAudio, MediaAudioAdmin)
-admin.site.register(Client)
+
+
+class ClientAdmin(admin.ModelAdmin):
+    list_display = ('last_name', 'first_name', 'middle_name', 'phone_number', 'email')
+    # pass
+
+
+admin.site.register(Client, ClientAdmin)
 admin.site.register(Pet)
+admin.site.register(Request)  # @todo добавить админки со всеми полями
