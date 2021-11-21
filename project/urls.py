@@ -33,7 +33,6 @@ urlpatterns = [
     # Print artifacts for printing with search by name
     # path('api/print/artifacts', views.PrintArtifactsView.as_view()),
 ]
-# @todo добавить регистрацию
 
 # Static and media
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
