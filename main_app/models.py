@@ -157,11 +157,34 @@ class TransportEvent(models.Model):
                               related_name='transport_events', null=True)
 
     class Meta:
-        verbose_name = 'Машина'
-        verbose_name_plural = 'Машины'
+        verbose_name = 'Событие перевозки'
+        verbose_name_plural = 'События перевозки'
 
     def __str__(self):
         return str(self.id)
+
+
+class Report(models.Model):
+    created_at = models.DateTimeField('Время создания', default=timezone.now)
+    description = models.TextField('Описание', max_length=200, blank=False)
+    order = models.ForeignKey('Order', on_delete=models.SET_NULL, verbose_name='Заказ',
+                              related_name='reports', null=True)
+    video = models.FileField('Видеофайл', upload_to='report_videos')
+    image = models.ImageField('Изображение', upload_to='report_images')
+
+    def clean(self):
+        approved_video_extensions = ('.mp4', '.ogv', '.webm', 'webvtt')
+        if not self.video.name.lower().endswith(approved_video_extensions):
+            raise ValidationError(
+                f"Расширение видеофайла может быть только одим из следующих: {', '.join(approved_video_extensions)}")
+
+    class Meta:
+        verbose_name = 'Отчет'
+        verbose_name_plural = 'Отчеты'
+
+    def __str__(self):
+        return str(self.id)
+
 # class Room(models.Model):
 #     uid = models.CharField('Уникальный идентификатор', max_length=50, default='none')
 #     name = models.CharField('Название', max_length=50)
