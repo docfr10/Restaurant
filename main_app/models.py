@@ -77,6 +77,8 @@ class Order(models.Model):
     status = models.CharField('Статус', choices=STATUSES, max_length=40, default='Создан')
     request = models.OneToOneField('Request', on_delete=models.SET_NULL, verbose_name='Заявка',
                                    related_name='order', null=True)
+    workers = models.ManyToManyField('Worker', verbose_name='Работники',
+                                     related_name='orders', blank=True)
 
     def clean(self):
         if self.duration <= 0:
