@@ -127,7 +127,26 @@ class Worker(models.Model):
         verbose_name_plural = 'Работники'
 
     def __str__(self):
-        return self.last_name + ' ' + self.first_name
+        return self.position + ' | ' + self.last_name + ' ' + self.first_name
+
+
+class Car(models.Model):
+    POSITIONS = (
+        ('Перевозчик', 'Перевозчик'),
+        ('Кипер', 'Кипер')
+    )
+    numbers = models.CharField('Номера', max_length=50)
+    mark_n_model = models.CharField('Марка, модель', max_length=50)
+    color = models.CharField('Цвет', max_length=50, blank=True)
+    worker = models.ForeignKey('Worker', on_delete=models.SET_NULL, verbose_name='Работник',
+                               related_name='cars', null=True)
+
+    class Meta:
+        verbose_name = 'Машина'
+        verbose_name_plural = 'Машины'
+
+    def __str__(self):
+        return self.mark_n_model + ' ' + self.numbers
 
 # class Room(models.Model):
 #     uid = models.CharField('Уникальный идентификатор', max_length=50, default='none')

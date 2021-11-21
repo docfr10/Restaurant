@@ -185,3 +185,4 @@ admin.site.register(Request)  # @todo добавить админки со вс�
 admin.site.register(Order)
 admin.site.register(Agreement)
 admin.site.register(Worker)
+admin.site.register(Car)
