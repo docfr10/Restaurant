@@ -176,7 +176,7 @@ AdminSite.site_header = 'Overexposure of animals'
 
 class ClientAdmin(admin.ModelAdmin):
     list_display = ('last_name', 'first_name', 'middle_name', 'phone_number', 'email')
-    # pass
+
 
 
 admin.site.register(Client, ClientAdmin)
@@ -187,3 +187,4 @@ admin.site.register(Agreement)
 admin.site.register(Worker)
 admin.site.register(Car)
 admin.site.register(TransportEvent)
+admin.site.register(Report)
