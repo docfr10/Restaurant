@@ -183,3 +183,4 @@ admin.site.register(Client, ClientAdmin)
 admin.site.register(Pet)
 admin.site.register(Request)  # @todo добавить админки со всеми полями
 admin.site.register(Order)
+admin.site.register(Agreement)

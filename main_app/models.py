@@ -62,10 +62,25 @@ class Request(models.Model):
 
 
 class Order(models.Model):
+    STATUSES = (
+        ('Создан', 'Создан'),
+        ('Ожидает подписания договора', 'Ожидает подписания договора'),
+        ('Ожидает оплаты', 'Ожидает оплаты'),
+        ('В транспортировке (от владельца)', 'В транспортировке (от владельца)'),
+        ('На передержке', 'На передержке'),
+        ('В транспортировке (к владельцу)', 'В транспортировке (к владельцу)'),
+        ('Завершен', 'Завершен'),
+        ('Отменен', 'Отменен')
+    )
     created_at = models.DateTimeField('Время создания', default=timezone.now)
-    duration = models.IntegerField('Длительность, дни', null=False)
+    duration = models.IntegerField('Длительность, дни')
+    status = models.CharField('Статус', choices=STATUSES, max_length=40, default='Создан')
     request = models.OneToOneField('Request', on_delete=models.SET_NULL, verbose_name='Заявка',
                                    related_name='order', null=True)
+
+    def clean(self):
+        if self.duration <= 0:
+            raise ValidationError('Длительность не может быть менее 1 дня')
 
     class Meta:
         verbose_name = 'Заказ'
@@ -73,6 +88,44 @@ class Order(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+
+class Agreement(models.Model):
+    description = models.TextField('Description', max_length=200, blank=False)
+    price = models.IntegerField('Стоимость, руб.')
+    order = models.OneToOneField('Order', on_delete=models.SET_NULL, verbose_name='Заказ',
+                                 related_name='agreement', null=True)
+
+    def clean(self):
+        if self.price <= 0:
+            raise ValidationError('Стоимость не может быть менее 1 руб.')
+
+    class Meta:
+        verbose_name = 'Договор'
+        verbose_name_plural = 'Договоры'
+
+    def __str__(self):
+        return str(self.id)
+
+
+class Worker(models.Model):
+    POSITIONS = (
+        ('Перевозчик', 'Перевозчик'),
+        ('Кипер', 'Кипер')
+    )
+    first_name = models.CharField('First name', max_length=50, blank=False)
+    last_name = models.CharField('Last name', max_length=50, blank=False)
+    middle_name = models.CharField('Middle name', max_length=50, blank=True)
+    phone_number = models.CharField('Phone number', max_length=20, blank=False)
+    email = models.EmailField('Email', blank=True)
+    position = models.CharField('Должность', choices=POSITIONS, max_length=40, default='Кипер')
+
+    class Meta:
+        verbose_name = 'Работник'
+        verbose_name_plural = 'Работники'
+
+    def __str__(self):
+        return self.last_name + ' ' + self.first_name
 
 # class Room(models.Model):
 #     uid = models.CharField('Уникальный идентификатор', max_length=50, default='none')
