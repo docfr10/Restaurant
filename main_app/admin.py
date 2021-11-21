@@ -46,7 +46,7 @@ class ReportAdmin(admin.ModelAdmin):
 
 admin.site.register(Client, ClientAdmin)
 admin.site.register(Pet, PetAdmin)
-admin.site.register(Request, RequestAdmin)  # @todo добавить админки со всеми полями
+admin.site.register(Request, RequestAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Agreement, AgreementAdmin)
 admin.site.register(Worker, WorkerAdmin)

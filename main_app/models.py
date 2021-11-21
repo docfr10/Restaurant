@@ -4,8 +4,6 @@ from django.utils import timezone
 from django.db import models
 
 
-# @todo перевести поля моделей
-
 class Client(models.Model):
     first_name = models.CharField('Имя', max_length=50, blank=False)
     last_name = models.CharField('Фамилия', max_length=50, blank=False)
