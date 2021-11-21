@@ -51,7 +51,7 @@ class Request(models.Model):
         verbose_name_plural = 'Заявки'
 
     def __str__(self):
-        return str(self.id)
+        return 'Заявка №' + str(self.id)
 
 
 class Order(models.Model):
@@ -82,7 +82,7 @@ class Order(models.Model):
         verbose_name_plural = 'Заказы'
 
     def __str__(self):
-        return str(self.id)
+        return 'Заказ №' + str(self.id)
 
 
 class Agreement(models.Model):
@@ -100,7 +100,7 @@ class Agreement(models.Model):
         verbose_name_plural = 'Договоры'
 
     def __str__(self):
-        return str(self.id)
+        return 'Договор №' + str(self.id)
 
 
 class Worker(models.Model):
@@ -154,7 +154,7 @@ class TransportEvent(models.Model):
         verbose_name_plural = 'События перевозки'
 
     def __str__(self):
-        return str(self.id)
+        return 'Перевозка №' + str(self.id)
 
 
 class Report(models.Model):
@@ -176,4 +176,4 @@ class Report(models.Model):
         verbose_name_plural = 'Отчеты'
 
     def __str__(self):
-        return str(self.id)
+        return 'Отчет №' + str(self.id)
