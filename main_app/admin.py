@@ -18,10 +18,14 @@ class PetAdmin(admin.ModelAdmin):
 
 class RequestAdmin(admin.ModelAdmin):
     list_display = ('pet', 'description')
+    list_filter = ('pet',)
+    search_fields = ('description',)
 
 
 class OrderAdmin(admin.ModelAdmin):
     list_display = ('request', 'created_at', 'duration', 'status')
+    list_filter = ('created_at', 'status')
+    search_fields = ('duration', 'status')
 
 
 class AgreementAdmin(admin.ModelAdmin):
