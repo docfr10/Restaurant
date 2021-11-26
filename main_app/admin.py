@@ -18,7 +18,8 @@ class OrderAdmin(admin.ModelAdmin):
     list_filter = ('status',)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        kwargs["queryset"] = Staff.objects.filter(position__position='Официант')
+        if db_field.name == 'employer':
+            kwargs["queryset"] = Staff.objects.filter(position__position='Официант')
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
