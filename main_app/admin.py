@@ -23,6 +23,10 @@ class OrderAdmin(admin.ModelAdmin):
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
+class ReceiptAdmin(admin.ModelAdmin):
+    list_display = ('order',)
+
+
 class StaffAdmin(admin.ModelAdmin):
     list_display = ('last_name', 'first_name', 'middle_name', 'position', 'phone_number', 'work_experience')
     list_filter = ('position', 'work_experience')
@@ -55,6 +59,16 @@ class SupplierAdmin(admin.ModelAdmin):
     list_display = ('last_name', 'first_name', 'middle_name', 'phone_number')
     search_fields = ('last_name', 'first_name',)
 
+
+admin.site.register(RegularCustomer, RegularCustomerAdmin)
+admin.site.register(Order, OrderAdmin)
+admin.site.register(Staff, StaffAdmin)
+admin.site.register(Positions, PositionsAdmin)
+admin.site.register(Dishes, DishesAdmin)
+admin.site.register(Batch, BatchAdmin)
+admin.site.register(Supplier, SupplierAdmin)
+admin.site.register(Workpieces, WorkpiecesAdmin)
+admin.site.register(Receipt, ReceiptAdmin)
 
 #
 # class ClientAdmin(admin.ModelAdmin):
@@ -106,12 +120,3 @@ class SupplierAdmin(admin.ModelAdmin):
 # admin.site.register(Car, CarAdmin)
 # admin.site.register(TransportEvent, TransportEventAdmin)
 # admin.site.register(Report, ReportAdmin)
-
-admin.site.register(RegularCustomer, RegularCustomerAdmin)
-admin.site.register(Order, OrderAdmin)
-admin.site.register(Staff, StaffAdmin)
-admin.site.register(Positions, PositionsAdmin)
-admin.site.register(Dishes, DishesAdmin)
-admin.site.register(Batch, BatchAdmin)
-admin.site.register(Supplier, SupplierAdmin)
-admin.site.register(Workpieces, WorkpiecesAdmin)

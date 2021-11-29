@@ -32,8 +32,13 @@ class RegularCustomer(models.Model):
         verbose_name = 'Постоянный клиент'
         verbose_name_plural = 'Постоянные клиенты'
 
-    def __str__(self):
-        return self.last_name + ' ' + self.first_name
+    def clean(self):
+        if self.discount_amount <= 0:
+            raise ValidationError('Скидка не может быть меньше 1%')
+
+
+def __str__(self):
+    return self.last_name + ' ' + self.first_name
 
 
 class Order(models.Model):
@@ -61,6 +66,17 @@ class Order(models.Model):
         return '№' + str(self.pk)
 
 
+class Receipt(models.Model):
+    order = models.OneToOneField('Order', on_delete=models.CASCADE, verbose_name='Заказ')
+
+    class Meta:
+        verbose_name = 'Чек'
+        verbose_name_plural = 'Чеки'
+
+    def __str__(self):
+        return 'Чек №' + str(self.pk)
+
+
 class Staff(models.Model):
     position = models.ForeignKey('Positions', on_delete=models.CASCADE, verbose_name='Должность',
                                  related_name='staffs')
@@ -69,7 +85,7 @@ class Staff(models.Model):
     middle_name = models.CharField('Отчетство', max_length=50, blank=True)
     phone_number = models.CharField('Номер телефона', max_length=20, blank=False)
     work_experience = models.FloatField('Опыт работы(лет)')
-    salary = models.IntegerField('Зарплата')  # Здесь можно сделать расчет з/п исходя из опыта работы
+    salary = models.IntegerField('Зарплата')
 
     class Meta:
         verbose_name = 'Сотрудник'
@@ -94,7 +110,8 @@ class Positions(models.Model):
 class Dishes(models.Model):
     name = models.CharField('Название', max_length=50)
     price = models.FloatField('Цена')
-    workpiece = models.OneToOneField('Workpieces', on_delete=models.CASCADE, verbose_name='Заготовка')
+    workpiece = models.ForeignKey('Workpieces', on_delete=models.CASCADE, verbose_name='Заготовка',
+                                  related_name='workpieces')
     equipment = models.TextField('Оборудрвание', max_length=500)
 
     class Meta:
