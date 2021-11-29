@@ -36,9 +36,8 @@ class RegularCustomer(models.Model):
         if self.discount_amount <= 0:
             raise ValidationError('Скидка не может быть меньше 1%')
 
-
-def __str__(self):
-    return self.last_name + ' ' + self.first_name
+    def __str__(self):
+        return self.last_name + ' ' + self.first_name
 
 
 class Order(models.Model):
@@ -68,6 +67,7 @@ class Order(models.Model):
 
 class Receipt(models.Model):
     order = models.OneToOneField('Order', on_delete=models.CASCADE, verbose_name='Заказ')
+    check_closing_date = models.DateTimeField('Дата закрытия чека', default=timezone.now())
 
     class Meta:
         verbose_name = 'Чек'

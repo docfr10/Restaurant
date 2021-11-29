@@ -9,8 +9,9 @@ AdminSite.site_header = 'Ресторан'
 
 
 class RegularCustomerAdmin(admin.ModelAdmin):
-    list_display = ('last_name', 'first_name', 'middle_name', 'phone_number', 'client_status')
-    list_filter = ('client_status',)
+    list_display = ('last_name', 'first_name', 'middle_name', 'phone_number', 'client_status', 'discount_amount')
+    list_filter = ('client_status', 'discount_amount')
+    search_fields = ('last_name', 'first_name', 'middle_name', 'phone_number')
 
 
 class OrderAdmin(admin.ModelAdmin):
