@@ -63,7 +63,7 @@ class Order(models.Model):
         verbose_name_plural = 'Заказы'
 
     def __str__(self):
-        return '№' + str(self.pk)
+        return 'Заказ №' + str(self.pk)
 
 
 class Receipt(models.Model):
@@ -72,6 +72,12 @@ class Receipt(models.Model):
     class Meta:
         verbose_name = 'Чек'
         verbose_name_plural = 'Чеки'
+
+    def save(self, *args, **kwargs):
+        order = Order.objects.get(pk=self.order.id)
+        order.status = 'Оплачен'
+        order.save()
+        super().save(*args, kwargs)
 
     def __str__(self):
         return 'Чек №' + str(self.pk)
